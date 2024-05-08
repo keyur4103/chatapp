@@ -1,0 +1,90 @@
+/* Resetting default browser styles */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Container for the chat app */
+.container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+/* Heading style */
+h1 {
+  font-size: 24px;
+  text-align: center;
+  color: #262626;
+}
+
+/* Input fields and buttons */
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+button {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+input[type="text"] {
+  width: calc(50% - 5px);
+  margin-right: 5px;
+}
+
+button {
+  background-color: #3897f0;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3578e5;
+}
+
+/* Chat message container */
+#messages {
+  margin-bottom: 20px;
+}
+
+/* Individual message style */
+.message {
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+/* Styling for user messages */
+.user-message {
+  background-color: #dbf3c3;
+  text-align: left;
+  margin-right: auto; /* Push user messages to the left */
+}
+
+/* Styling for received messages */
+.received-message {
+  background-color: #f0f0f0;
+  text-align: right;
+  margin-left: auto; /* Push received messages to the right */
+}
+
+/* User count display */
+#usersCount {
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+}

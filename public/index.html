@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Chat App</h1>
+
+      <!-- Input fields for user name and chat ID -->
+      <div class="input-container">
+        <input type="text" placeholder="Your Name" id="username" />
+        <input type="text" placeholder="Enter chat ID" id="chatId" />
+        <button id="joinBtn">Join Chat</button>
+      </div>
+
+      <!-- Display number of users joining by name -->
+      <div id="usersCount"></div>
+
+      <!-- Chat message container -->
+      <div id="messages"></div>
+
+      <!-- Input field and send button (hidden until user joins chat) -->
+      <div id="chatInterface" style="display: none">
+        <input type="text" placeholder="Enter message" id="message" />
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const usernameInput = document.getElementById("username");
+      const chatIdInput = document.getElementById("chatId");
+      const joinBtn = document.getElementById("joinBtn");
+      const messagesContainer = document.getElementById("messages");
+      const chatInterface = document.getElementById("chatInterface");
+      const messageInput = document.getElementById("message");
+      const sendBtn = document.getElementById("sendBtn");
+      const usersCountDisplay = document.getElementById("usersCount");
+
+      joinBtn.addEventListener("click", () => {
+        const username = usernameInput.value.trim();
+        const chatId = chatIdInput.value.trim();
+        if (username !== "" && chatId !== "") {
+          socket.emit("join-chat", { username, chatId }); // Send username and chat ID to server
+          usernameInput.disabled = true; // Disable username input after joining
+          chatIdInput.disabled = true; // Disable chat ID input after joining
+          joinBtn.disabled = true; // Disable join button after joining
+          chatInterface.style.display = "block"; // Show chat interface after joining
+        } else {
+          alert("Please enter a valid username and chat ID.");
+        }
+      });
+
+      socket.on("message", (message) => {
+        const p = document.createElement("p");
+        p.innerText = message;
+        messagesContainer.appendChild(p);
+      });
+
+      socket.on("users-count", (count) => {
+        usersCountDisplay.innerText = `Users in the chat: ${count}`;
+      });
+
+      sendBtn.addEventListener("click", () => {
+        const message = messageInput.value.trim();
+        if (message !== "") {
+          socket.emit("user-msg", message);
+          messageInput.value = ""; // Clear input field after sending
+        }
+      });
+    </script>
+  </body>
+</html>
